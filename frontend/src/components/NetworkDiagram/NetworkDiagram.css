@@ -142,9 +142,11 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 12px;
-  max-width: 200px;
+  max-width: 250px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 5;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .diagram-legend h4 {
@@ -153,6 +155,36 @@
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 8px;
+}
+
+.topology-mode-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.topology-mode-selector button {
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+  text-align: left;
+}
+
+.topology-mode-selector button:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-color);
+}
+
+.topology-mode-selector button.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
 }
 
 .legend-items {

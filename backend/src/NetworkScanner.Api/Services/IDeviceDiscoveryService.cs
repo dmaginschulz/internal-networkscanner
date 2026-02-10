@@ -8,4 +8,5 @@ public interface IDeviceDiscoveryService
     Task<string?> GetMacAddressAsync(string ipAddress);
     DeviceType GuessDeviceType(Device device);
     Task<string?> DetectOperatingSystemAsync(Device device);
+    Task<string?> GetDefaultGatewayAsync(string ipAddress);
 }

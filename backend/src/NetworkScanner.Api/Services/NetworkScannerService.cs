@@ -11,6 +11,7 @@ public class NetworkScannerService : INetworkScannerService
     private readonly ScannerConfiguration _config;
     private readonly IPortScannerService _portScanner;
     private readonly IDeviceDiscoveryService _deviceDiscovery;
+    private readonly ITopologyDiscoveryService _topologyDiscovery;
     private readonly IDeviceRepository _deviceRepository;
     private readonly ILogger<NetworkScannerService> _logger;
 
@@ -18,12 +19,14 @@ public class NetworkScannerService : INetworkScannerService
         IOptions<ScannerConfiguration> config,
         IPortScannerService portScanner,
         IDeviceDiscoveryService deviceDiscovery,
+        ITopologyDiscoveryService topologyDiscovery,
         IDeviceRepository deviceRepository,
         ILogger<NetworkScannerService> logger)
     {
         _config = config.Value;
         _portScanner = portScanner;
         _deviceDiscovery = deviceDiscovery;
+        _topologyDiscovery = topologyDiscovery;
         _deviceRepository = deviceRepository;
         _logger = logger;
     }
@@ -64,6 +67,26 @@ public class NetworkScannerService : INetworkScannerService
         });
 
         await Task.WhenAll(tasks);
+
+        // Discover physical topology connections
+        _logger.LogInformation("Discovering physical topology connections...");
+        try
+        {
+            var connections = await _topologyDiscovery.DiscoverPhysicalConnectionsAsync(devices, cancellationToken);
+
+            // Update device connections
+            foreach (var device in devices)
+            {
+                if (connections.TryGetValue(device.Id, out var connectedDeviceIds))
+                {
+                    device.ConnectedTo = connectedDeviceIds;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Error discovering physical topology. Continuing without topology data.");
+        }
 
         // Save all devices to repository
         foreach (var device in devices)
@@ -156,6 +179,9 @@ public class NetworkScannerService : INetworkScannerService
 
             // Detect OS
             device.OperatingSystem = await _deviceDiscovery.DetectOperatingSystemAsync(device);
+
+            // Get default gateway
+            device.DefaultGateway = await _deviceDiscovery.GetDefaultGatewayAsync(ipAddress);
 
             _logger.LogInformation("Successfully scanned device {IpAddress} ({Hostname})",
                 ipAddress, device.Hostname ?? "Unknown");

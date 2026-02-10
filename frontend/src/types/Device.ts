@@ -13,4 +13,6 @@ export interface Device {
   lastSeen: string; // ISO date string
   firstDiscovered: string; // ISO date string
   isOnline: boolean;
+  defaultGateway: string | null;
+  connectedTo: string[];
 }

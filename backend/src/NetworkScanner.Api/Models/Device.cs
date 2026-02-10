@@ -36,4 +36,10 @@ public class Device
 
     [JsonPropertyName("isOnline")]
     public bool IsOnline { get; set; }
+
+    [JsonPropertyName("defaultGateway")]
+    public string? DefaultGateway { get; set; }
+
+    [JsonPropertyName("connectedTo")]
+    public List<string> ConnectedTo { get; set; } = new();
 }

@@ -55,6 +55,8 @@ builder.Services.Configure<NetworkScanner.Api.Configuration.ScannerConfiguration
 builder.Services.AddScoped<NetworkScanner.Api.Services.INetworkScannerService, NetworkScanner.Api.Services.NetworkScannerService>();
 builder.Services.AddScoped<NetworkScanner.Api.Services.IPortScannerService, NetworkScanner.Api.Services.PortScannerService>();
 builder.Services.AddScoped<NetworkScanner.Api.Services.IDeviceDiscoveryService, NetworkScanner.Api.Services.DeviceDiscoveryService>();
+builder.Services.AddScoped<NetworkScanner.Api.Services.ITopologyDiscoveryService, NetworkScanner.Api.Services.TopologyDiscoveryService>();
+builder.Services.AddScoped<NetworkScanner.Api.Services.IInferenceTopologyService, NetworkScanner.Api.Services.InferenceTopologyService>();
 builder.Services.AddSingleton<NetworkScanner.Api.Services.IDeviceRepository, NetworkScanner.Api.Services.DeviceRepository>();
 
 var app = builder.Build();
