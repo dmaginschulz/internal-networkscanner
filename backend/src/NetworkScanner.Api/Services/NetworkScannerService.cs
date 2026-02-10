@@ -35,7 +35,9 @@ public class NetworkScannerService : INetworkScannerService
         var cidr = cidrNotation ?? _config.NetworkCidr;
         _logger.LogInformation("Starting network scan for {Cidr}", cidr);
 
-        var ipAddresses = ParseCidr(cidr);
+        var ipAddresses = cidr.Contains('-')
+            ? ParseIpRange(cidr)
+            : ParseCidr(cidr);
         _logger.LogInformation("Scanning {Count} IP addresses", ipAddresses.Count);
 
         var devices = new List<Device>();
@@ -222,6 +224,74 @@ public class NetworkScannerService : INetworkScannerService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error parsing CIDR notation: {Cidr}", cidr);
+        }
+
+        return ipAddresses;
+    }
+
+    private List<string> ParseIpRange(string ipRange)
+    {
+        var ipAddresses = new List<string>();
+
+        try
+        {
+            var parts = ipRange.Split('-');
+            if (parts.Length != 2)
+            {
+                _logger.LogWarning("Invalid IP range format: {IpRange}. Expected format: 192.168.1.1-192.168.1.254", ipRange);
+                return ipAddresses;
+            }
+
+            var startIp = parts[0].Trim();
+            var endIp = parts[1].Trim();
+
+            if (!IPAddress.TryParse(startIp, out var startAddress) ||
+                !IPAddress.TryParse(endIp, out var endAddress))
+            {
+                _logger.LogWarning("Invalid IP addresses in range: {IpRange}", ipRange);
+                return ipAddresses;
+            }
+
+            // Only support IPv4 ranges for now
+            if (startAddress.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork ||
+                endAddress.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork)
+            {
+                _logger.LogWarning("Only IPv4 ranges are supported: {IpRange}", ipRange);
+                return ipAddresses;
+            }
+
+            var startBytes = startAddress.GetAddressBytes();
+            var endBytes = endAddress.GetAddressBytes();
+
+            var startInt = BitConverter.ToUInt32(startBytes.Reverse().ToArray(), 0);
+            var endInt = BitConverter.ToUInt32(endBytes.Reverse().ToArray(), 0);
+
+            if (startInt > endInt)
+            {
+                _logger.LogWarning("Start IP is greater than end IP: {IpRange}", ipRange);
+                return ipAddresses;
+            }
+
+            var totalIps = endInt - startInt + 1;
+            if (totalIps > 65536) // Limit to /16 network max
+            {
+                _logger.LogWarning("IP range too large (max 65536 IPs): {IpRange}", ipRange);
+                return ipAddresses;
+            }
+
+            // Generate all IPs in range
+            for (uint i = startInt; i <= endInt; i++)
+            {
+                var ipBytes = BitConverter.GetBytes(i).Reverse().ToArray();
+                var ip = new IPAddress(ipBytes);
+                ipAddresses.Add(ip.ToString());
+            }
+
+            _logger.LogInformation("Parsed IP range {IpRange} to {Count} addresses", ipRange, ipAddresses.Count);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error parsing IP range: {IpRange}", ipRange);
         }
 
         return ipAddresses;
