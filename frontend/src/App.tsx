@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNetworkScan } from './hooks/useNetworkScan';
 import { useDevices } from './hooks/useDevices';
 import DeviceTable from './components/DeviceTable/DeviceTable';
@@ -11,8 +11,25 @@ function App() {
   const [cidr, setCidr] = useState('');
   const [startIp, setStartIp] = useState('');
   const [endIp, setEndIp] = useState('');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = localStorage.getItem('theme');
+    return (saved as 'dark' | 'light') || 'dark';
+  });
   const { scanning, error, startScan } = useNetworkScan();
   const { devices, selectedDevice, setSelectedDevice, addDevices } = useDevices();
+
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const handleScan = async () => {
     try {
@@ -47,8 +64,13 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>🌐 Network Scanner</h1>
-        <p>Scan and discover all devices in your network</p>
+        <div className="app-title">
+          <h1>🌐 Network Scanner</h1>
+          <p>Scan and discover all devices in your network</p>
+        </div>
+        <button onClick={toggleTheme} className="theme-toggle" title="Toggle theme">
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
       </header>
 
       <div className="controls">

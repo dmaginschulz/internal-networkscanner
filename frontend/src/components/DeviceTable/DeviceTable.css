@@ -1,7 +1,8 @@
 .device-table-container {
-  background: #1a1a1a;
+  background: var(--bg-secondary);
   border-radius: 8px;
   overflow: hidden;
+  transition: background-color 0.3s;
 }
 
 .table-controls {
@@ -9,7 +10,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  border-bottom: 1px solid #4a4a4a;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .search-input {
@@ -17,7 +18,7 @@
 }
 
 .result-count {
-  color: #888;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   white-space: nowrap;
 }
@@ -37,7 +38,7 @@
 }
 
 .device-table tbody tr.selected {
-  background-color: rgba(100, 108, 255, 0.2);
+  background-color: var(--selected-bg);
 }
 
 .online-indicator {
@@ -72,17 +73,17 @@
 }
 
 .port-count {
-  color: #888;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .empty-table {
   padding: 3rem;
   text-align: center;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 em {
-  color: #666;
+  color: var(--text-tertiary);
   font-style: italic;
 }

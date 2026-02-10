@@ -3,14 +3,40 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Theme (default) */
+:root {
+  --bg-primary: #242424;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: #888;
+  --text-tertiary: #666;
+  --border-color: #4a4a4a;
+  --accent-color: #646cff;
+  --accent-hover: #747bff;
+  --hover-bg: rgba(100, 108, 255, 0.1);
+  --selected-bg: rgba(100, 108, 255, 0.2);
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e0e0e0;
+  --text-primary: #213547;
+  --text-secondary: #666;
+  --text-tertiary: #888;
+  --border-color: #d0d0d0;
+  --accent-color: #646cff;
+  --accent-hover: #535bf2;
+  --hover-bg: rgba(100, 108, 255, 0.08);
+  --selected-bg: rgba(100, 108, 255, 0.15);
 }
 
 * {
@@ -23,6 +49,9 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -37,13 +66,14 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.3s;
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: var(--accent-color);
 }
 
 button:focus,
@@ -54,14 +84,15 @@ button:focus-visible {
 input {
   padding: 0.6em;
   border-radius: 4px;
-  border: 1px solid #4a4a4a;
-  background-color: #1a1a1a;
-  color: inherit;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   font-family: inherit;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 input:focus {
-  outline: 2px solid #646cff;
+  outline: 2px solid var(--accent-color);
   outline-offset: 2px;
 }
 
@@ -73,20 +104,21 @@ table {
 th, td {
   text-align: left;
   padding: 12px;
-  border-bottom: 1px solid #4a4a4a;
+  border-bottom: 1px solid var(--border-color);
 }
 
 th {
-  background-color: #1a1a1a;
+  background-color: var(--bg-secondary);
   font-weight: 600;
   cursor: pointer;
   user-select: none;
+  transition: background-color 0.2s;
 }
 
 th:hover {
-  background-color: #2a2a2a;
+  background-color: var(--bg-tertiary);
 }
 
 tr:hover {
-  background-color: rgba(100, 108, 255, 0.1);
+  background-color: var(--hover-bg);
 }

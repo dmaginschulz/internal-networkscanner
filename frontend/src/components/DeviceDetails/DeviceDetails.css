@@ -1,7 +1,8 @@
 .device-details {
-  background: #1a1a1a;
+  background: var(--bg-secondary);
   border-radius: 8px;
   overflow: hidden;
+  transition: background-color 0.3s;
 }
 
 .details-header {
@@ -9,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #4a4a4a;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .details-header h3 {
@@ -23,12 +24,13 @@
   font-size: 1.5rem;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
-  color: #888;
+  color: var(--text-secondary);
+  transition: color 0.2s, background-color 0.2s;
 }
 
 .close-button:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  background: var(--hover-bg);
 }
 
 .details-content {
@@ -48,7 +50,7 @@
 .detail-section h4 {
   margin: 0 0 0.75rem 0;
   font-size: 1rem;
-  color: #646cff;
+  color: var(--accent-color);
 }
 
 .detail-item {
@@ -59,7 +61,7 @@
 .detail-item .label {
   font-weight: 600;
   min-width: 140px;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 .detail-item .value {
@@ -78,9 +80,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  background: rgba(100, 108, 255, 0.1);
+  background: var(--hover-bg);
   border-radius: 4px;
   font-size: 0.9rem;
+  transition: background-color 0.3s;
 }
 
 .port-number {
@@ -88,16 +91,16 @@
 }
 
 .port-protocol {
-  color: #888;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
 .port-service {
-  color: #646cff;
+  color: var(--accent-color);
   font-size: 0.85rem;
 }
 
 .no-data {
-  color: #888;
+  color: var(--text-secondary);
   font-style: italic;
 }
