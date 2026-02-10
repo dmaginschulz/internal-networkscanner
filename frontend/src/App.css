@@ -1,0 +1,110 @@
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.app-header p {
+  color: #888;
+}
+
+.controls {
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.scan-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.scan-controls input {
+  flex: 1;
+  min-width: 250px;
+}
+
+.scan-controls button {
+  white-space: nowrap;
+}
+
+.error {
+  color: #ff6b6b;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 4px;
+}
+
+.scanning-indicator {
+  text-align: center;
+  padding: 3rem;
+}
+
+.spinner {
+  border: 4px solid rgba(100, 108, 255, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #646cff;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.content.with-details {
+  grid-template-columns: 2fr 1fr;
+}
+
+.table-section h2 {
+  margin-bottom: 1rem;
+}
+
+.details-section {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #888;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 1024px) {
+  .content.with-details {
+    grid-template-columns: 1fr;
+  }
+
+  .details-section {
+    position: static;
+  }
+}

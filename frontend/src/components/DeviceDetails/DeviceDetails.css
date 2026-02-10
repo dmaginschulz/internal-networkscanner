@@ -1,0 +1,103 @@
+.device-details {
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #4a4a4a;
+}
+
+.details-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.details-content {
+  padding: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.detail-section {
+  margin-bottom: 1.5rem;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: #646cff;
+}
+
+.detail-item {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.detail-item .label {
+  font-weight: 600;
+  min-width: 140px;
+  color: #888;
+}
+
+.detail-item .value {
+  flex: 1;
+  word-break: break-word;
+}
+
+.ports-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.port-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.port-number {
+  font-weight: 600;
+}
+
+.port-protocol {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.port-service {
+  color: #646cff;
+  font-size: 0.85rem;
+}
+
+.no-data {
+  color: #888;
+  font-style: italic;
+}
