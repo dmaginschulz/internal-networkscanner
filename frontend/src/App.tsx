@@ -3,11 +3,13 @@ import { useNetworkScan } from './hooks/useNetworkScan';
 import { useDevices } from './hooks/useDevices';
 import DeviceTable from './components/DeviceTable/DeviceTable';
 import DeviceDetails from './components/DeviceDetails/DeviceDetails';
+import NetworkDiagram from './components/NetworkDiagram/NetworkDiagram';
 import { exportToExcel } from './services/exportService';
 import './App.css';
 
 function App() {
   const [scanMode, setScanMode] = useState<'cidr' | 'range'>('range');
+  const [viewMode, setViewMode] = useState<'table' | 'diagram'>('table');
   const [cidr, setCidr] = useState('');
   const [startIp, setStartIp] = useState('');
   const [endIp, setEndIp] = useState('');
@@ -126,9 +128,27 @@ function App() {
             {scanning ? '🔄 Scannen...' : '🔍 Netzwerk Scannen'}
           </button>
           {devices.length > 0 && (
-            <button onClick={handleExport} className="export-button">
-              📊 Export Excel
-            </button>
+            <>
+              <button onClick={handleExport} className="export-button">
+                📊 Export Excel
+              </button>
+              <div className="view-mode-toggle">
+                <button
+                  className={viewMode === 'table' ? 'active' : ''}
+                  onClick={() => setViewMode('table')}
+                  title="Tabellen-Ansicht"
+                >
+                  📋 Tabelle
+                </button>
+                <button
+                  className={viewMode === 'diagram' ? 'active' : ''}
+                  onClick={() => setViewMode('diagram')}
+                  title="Netzplan-Ansicht"
+                >
+                  🗺️ Netzplan
+                </button>
+              </div>
+            </>
           )}
         </div>
         {error && <div className="error">{error}</div>}
@@ -148,14 +168,25 @@ function App() {
 
       {devices.length > 0 && (
         <div className="content">
-          <div className="table-section">
-            <h2>Gefundene Geräte ({devices.length})</h2>
-            <DeviceTable
-              devices={devices}
-              onSelectDevice={setSelectedDevice}
-              selectedDeviceId={selectedDevice?.id}
-            />
-          </div>
+          {viewMode === 'table' ? (
+            <div className="table-section">
+              <h2>Gefundene Geräte ({devices.length})</h2>
+              <DeviceTable
+                devices={devices}
+                onSelectDevice={setSelectedDevice}
+                selectedDeviceId={selectedDevice?.id}
+              />
+            </div>
+          ) : (
+            <div className="diagram-section">
+              <h2>Netzplan ({devices.length} Geräte)</h2>
+              <NetworkDiagram
+                devices={devices}
+                onSelectDevice={setSelectedDevice}
+                selectedDeviceId={selectedDevice?.id}
+              />
+            </div>
+          )}
 
           {selectedDevice && (
             <div className="details-section">

@@ -120,6 +120,36 @@
   border-color: #10b981;
 }
 
+.view-mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px;
+  background: var(--bg-tertiary);
+}
+
+.view-mode-toggle button {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.view-mode-toggle button.active {
+  background: var(--accent-color);
+  color: white;
+}
+
+.view-mode-toggle button:hover:not(.active) {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
 .scan-hint {
   margin-top: 0.75rem;
   font-size: 0.85rem;
@@ -165,8 +195,13 @@
   grid-template-columns: 2fr 1fr;
 }
 
-.table-section h2 {
+.table-section h2,
+.diagram-section h2 {
   margin-bottom: 1rem;
+}
+
+.diagram-section {
+  width: 100%;
 }
 
 .details-section {
