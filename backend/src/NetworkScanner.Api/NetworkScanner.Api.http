@@ -1,0 +1,6 @@
+@NetworkScanner.Api_HostAddress = http://localhost:5101
+
+GET {{NetworkScanner.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
